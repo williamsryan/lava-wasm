@@ -52,9 +52,9 @@ def is_package_installed(pkg):
         return True
 
 
-if not is_package_installed("python-colorama"):
-    subprocess.check_call(['sudo', 'apt-get',
-                           'install', '-y', 'python-colorama'])
+# if not is_package_installed("python-colorama"):
+#     subprocess.check_call(['sudo', 'apt-get',
+#                            'install', '-y', 'python-colorama'])
 
 # this is set to denote user is already in docker group
 ALREADY_IN_DOCKER_GROUP = False
@@ -96,11 +96,11 @@ PANDA_UBUNTU = "https://raw.githubusercontent.com/panda-re/panda" \
 
 # libc6 needed for compiling btrace
 # libjsoncpp needed for fbi json parsing
-LAVA_DEPS = ["libjsoncpp-dev", "postgresql", "jq", "python-psycopg2",
-             "python-sqlalchemy", "socat", "libpq-dev", "cmake",
-             "docker.io", "bc", "python-pexpect", "python-psutil",
-             "python-lockfile", "genisoimage", "inotify-tools",
-             "build-essential", "python-pip", "libprotobuf-c0-dev",
+LAVA_DEPS = ["libjsoncpp-dev", "postgresql", "jq", "psycopg2",
+             "SQLAlchemy", "socat", "libpq-dev", "cmake",
+             "docker.io", "bc", "psutil",
+             "lockfile", "genisoimage", "inotify-tools",
+             "build-essential", "python3-pip", "libprotobuf-c0-dev",
              "libodb-pgsql-2.4", "libfdt-dev"]
 
 PANDA_MAK = """
@@ -217,8 +217,8 @@ def main():
               Run as user!\nUSAGE: {}".format(sys.argv[0]))
 
     progress("Installing LAVA apt-get dependencies")
-    if not all(map(is_package_installed, LAVA_DEPS)):
-        run(['sudo', 'apt-get', '-y', 'install'] + LAVA_DEPS)
+    # if not all(map(is_package_installed, LAVA_DEPS)):
+        # run(['sudo', 'apt-get', '-y', 'install'] + LAVA_DEPS)
 
     # set up postgres authentication.
     if not isfile(join(os.environ['HOME'], '.pgpass')):
