@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
 import os
 import re
@@ -96,11 +96,11 @@ PANDA_UBUNTU = "https://raw.githubusercontent.com/panda-re/panda" \
 
 # libc6 needed for compiling btrace
 # libjsoncpp needed for fbi json parsing
-LAVA_DEPS = ["libjsoncpp-dev", "postgresql", "jq", "psycopg2",
-             "SQLAlchemy", "socat", "libpq-dev", "cmake",
-             "docker.io", "bc", "psutil",
-             "lockfile", "genisoimage", "inotify-tools",
-             "build-essential", "python3-pip", "libprotobuf-c0-dev",
+LAVA_DEPS = ["libjsoncpp-dev", "postgresql", "jq", "python3-psycopg2",
+             "python3-sqlalchemy", "socat", "libpq-dev", "cmake",
+             "docker.io", "bc", "python3-psutil",
+             "python3-lockfile", "genisoimage", "inotify-tools",
+             "build-essential", "python3-pip", "libprotobuf-c-dev",
              "libodb-pgsql-2.4", "libfdt-dev"]
 
 PANDA_MAK = """
@@ -219,8 +219,8 @@ def main():
               Run as user!\nUSAGE: {}".format(sys.argv[0]))
 
     progress("Installing LAVA apt-get dependencies")
-    # if not all(map(is_package_installed, LAVA_DEPS)):
-    #     run(['sudo', 'apt-get', '-y', 'install'] + LAVA_DEPS)
+    if not all(map(is_package_installed, LAVA_DEPS)):
+        run(['sudo', 'apt-get', '-y', 'install'] + LAVA_DEPS)
 
     # set up postgres authentication.
     if not isfile(join(os.environ['HOME'], '.pgpass')):
