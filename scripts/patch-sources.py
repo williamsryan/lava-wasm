@@ -1,4 +1,5 @@
-#!/usr/bin/python
+#!/usr/bin/python3
+
 import os
 import sys
 import shutil
@@ -19,6 +20,6 @@ def modify_sources_list():
 
 if __name__ == "__main__":
     if os.getuid() != 0:
-        print "Must run {} as sudo or root".format(sys.argv[0])
+        print(f"Must run {sys.argv[0]} as sudo or root")
         exit(1)
     modify_sources_list()

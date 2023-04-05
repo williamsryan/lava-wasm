@@ -175,9 +175,9 @@ ENV_VARS = ['HTTP_PROXY', 'HTTPS_PROXY', 'http_proxy',
             'https_proxy', 'no_proxy']
 env_map = {k: os.environ[k] for k in ENV_VARS if k in os.environ}
 env_var_args = sum([['-e', '{}={}'.format(k, v)]
-                    for k, v in env_map.iteritems()], [])
+                    for k, v in env_map.items()], [])
 build_args = sum([['--build-arg', '{}={}'.format(k, v)]
-                  for k, v in env_map.iteritems()], [])
+                  for k, v in env_map.items()], [])
 
 ALREADY_IN_DOCKER_GROUP = user_in_docker(getpass.getuser())
 
@@ -192,7 +192,9 @@ def run_docker(cmd):
         [DOCKER_NAME, 'su', '-l', getpass.getuser(), '-c', cmd]
     try:
         progress("Running in docker [{}] . . . ".format(cmd))
-        print "[{}]".format(" ".join(cmd_args))
+        # print "[{}]".format(" ".join(cmd_args))
+        cmd_str = "[{}]".format(" ".join(cmd_args))
+        print(f"{cmd_str}")
         subprocess.check_call(cmd_args)
     except subprocess.CalledProcessError:
         error("[{}] cmd did not execute properly.")
@@ -218,7 +220,7 @@ def main():
 
     progress("Installing LAVA apt-get dependencies")
     # if not all(map(is_package_installed, LAVA_DEPS)):
-        # run(['sudo', 'apt-get', '-y', 'install'] + LAVA_DEPS)
+    #     run(['sudo', 'apt-get', '-y', 'install'] + LAVA_DEPS)
 
     # set up postgres authentication.
     if not isfile(join(os.environ['HOME'], '.pgpass')):
@@ -226,8 +228,8 @@ def main():
                                                     '${depends}',
                                                     'postgresql']).splitlines()
         postgres_pkg = [d for d in postgres_depends
-                        if re.match(r'postgresql-[0-9]+.?[0-9]+', d)][0]
-        postgres_version = postgres_pkg.replace('postgresql-', '')
+                        if re.match(r'postgresql-[0-9]+.?[0-9]+', d.decode('utf-8'))][0]
+        postgres_version = postgres_pkg.decode('utf-8').replace('postgresql-', '')
         pg_hba = "/etc/postgresql/{}/main/pg_hba.conf".format(postgres_version)
         postgres_password = 'postgrespostgres'
         run(['sudo', 'sed', '-i.bak', '-E',
@@ -280,7 +282,7 @@ def main():
         try:
             os.makedirs(PANDA_BUILD_DIR)
         except OSError:
-            print "Warning: Panda build directory is already there"
+            print("Warning: Panda build directory is already there")
         os.chdir(PANDA_DIR)
         run(['git', 'submodule', 'update', '--init', 'dtc'])
         os.chdir(PANDA_BUILD_DIR)
@@ -311,7 +313,7 @@ def main():
     if len(filt_lines) > 0:
         progress("Uncommenting {} deb-src lines in".format(len(filt_lines)) +
                  "/etc/apt/sources.list")
-        run(['sudo', 'python', patch_sources])
+        run(['sudo', 'python3', patch_sources])
 
     progress("Checking for ODB orm libraries")
     odb_version = "2.4.0"
