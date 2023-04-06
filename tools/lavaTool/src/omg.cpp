@@ -7,7 +7,6 @@
 
 using namespace std;
 
-
 #include "clang/AST/AST.h"
 #include "clang/Driver/Options.h"
 #include "clang/Frontend/CompilerInstance.h"
