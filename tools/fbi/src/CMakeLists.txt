@@ -2,7 +2,7 @@ project (FBI LANGUAGES CXX)
 
 # Panda src, headers and build locations
 set (PANDA_SRC_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../../../panda/src)
-set (PANDA_BUILD_DIR ${PANDA_SRC_PATH}/../build)
+set (PANDA_BUILD_DIR ${PANDA_SRC_PATH}/build)
 set (PANDA_HEADERS ${PANDA_SRC_PATH}/panda/include)
 
 # fbilib target

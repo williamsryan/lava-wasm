@@ -1,4 +1,4 @@
-project (lavaTool VERSION 2.0.0 LANGUAGES CXX)
+#project (lavaTool VERSION 2.0.0 LANGUAGES CXX)
 # LLVM variables to compile our clang tool
 set (LLVM_LINK_COMPONENTS support)
 

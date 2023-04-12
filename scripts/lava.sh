@@ -105,7 +105,7 @@ fi
 
 if [[ $demo -eq 1 ]]
 then
-    gnome-terminal --geometry=90x40  -x bash -c "python $(dirname $0)/demo.py $json; read" &
+    gnome-terminal --geometry=90x40  -x bash -c "python3 $(dirname $0)/demo.py $json; read" &
 fi
 
 progress "everything" 1 "JSON file is $json"
@@ -219,7 +219,7 @@ if [ $taint -eq 1 ]; then
         lf="$logs/bug_mining-$i.log"
         truncate "$lf"
         progress "everything" 1 "PANDA taint analysis prospective bug mining -- input $input -- logging to $lf"
-        run_remote "$pandahost" "$python $scripts/bug_mining.py $hostjson $project_name $input $curtail" "$lf"
+        run_remote "$pandahost" "python3 $scripts/bug_mining.py $hostjson $project_name $input $curtail" "$lf"
         echo -n "Num Bugs in db: "
         bug_count=$(run_remote "$pandahost" "psql -At $db -U postgres -c 'select count(*) from bug'")
         if [ "$bug_count" = "0" ]; then
@@ -248,7 +248,7 @@ if [ $inject -eq 1 ]; then
         if [ "$injfixupsscript" != "null" ]; then
             fix="--fixupsscript='$injfixupsscript'"
         fi
-        run_remote "$testinghost" "$python $scripts/inject.py -t $bugtypes -m $many -e $exitCode $kt $fix $hostjson $project_name" "$lf"
+        run_remote "$testinghost" "python3 $scripts/inject.py -t $bugtypes -m $many -e $exitCode $kt $fix $hostjson $project_name" "$lf"
     grep yield "$lf"  | grep " real bugs "
     done
 fi
