@@ -116,7 +116,7 @@ progress("Entering {}".format(project['output_dir']))
 os.chdir(os.path.join(project['output_dir']))
 
 tar_files = subprocess32.check_output(['tar', 'tf', project['tarfile']])
-sourcedir = tar_files.splitlines()[0].split(os.path.sep)[0]
+sourcedir = tar_files.decode('utf-8').splitlines()[0].split(os.path.sep)[0]
 sourcedir = abspath(sourcedir)
 
 print()
