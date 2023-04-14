@@ -190,10 +190,10 @@ qemu_args = [
     '-pandalog', pandalog, '-os', panda_os_string
 ]
 
-for plugin, plugin_args in panda_args.iteritems():
+for plugin, plugin_args in panda_args.items():
     qemu_args.append('-panda')
     arg_string = ",".join(["{}={}".format(arg, val)
-                           for arg, val in plugin_args.iteritems()])
+                           for arg, val in plugin_args.items()])
     qemu_args.append('{}{}{}'.format(plugin, ':'
                                      if arg_string else '', arg_string))
 
@@ -279,3 +279,4 @@ for i in range(len(Bug.type_strings)):
 print("total dua:", db.session.query(Dua).count())
 print("total atp:", db.session.query(AttackPoint).count())
 print("total bug:", db.session.query(Bug).count())
+
